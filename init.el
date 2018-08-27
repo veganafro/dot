@@ -11,12 +11,15 @@
  ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector
    ["#2e3436" "#a40000" "#4e9a06" "#c4a000" "#204a87" "#5c3566" "#729fcf" "#eeeeec"])
- '(indent-tabs-mode nil)
- '(tab-width 4)
- '(tab-stop-list (number-sequence 4 200 4))
  '(custom-enabled-themes (quote (wheatgrass)))
+ '(indent-tabs-mode nil)
  '(inhibit-startup-screen nil)
- '(package-selected-packages (quote (python sml-mode))))
+ '(package-selected-packages
+   (quote
+    (sr-speedbar company-go company go-mode python sml-mode)))
+ '(speedbar-show-unknown-files t)
+ '(tab-stop-list (number-sequence 4 200 4))
+ '(tab-width 4))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -40,3 +43,14 @@
     (if (> tab-count space-count) (setq indent-tabs-mode t))))
 
 (infer-indentation-style)
+
+(add-hook 'after-init-hook 'global-company-mode) ; use `company-mode` in all buffers
+
+(when (version<= "26.0.50" emacs-version ) ; toggle line numbers
+  (global-display-line-numbers-mode))
+
+;; start sr-speedbar
+(sr-speedbar-open)
+
+;; show hidden files in speedbar
+(setq speedbar-directory-unshown-regexp "^\\(CVS\\|RCS\\|SCCS\\|\\.\\.*$\\)\\'")
