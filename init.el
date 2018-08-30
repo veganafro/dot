@@ -9,14 +9,19 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ansi-color-faces-vector
+   [default default default italic underline success warning error])
  '(ansi-color-names-vector
    ["#2e3436" "#a40000" "#4e9a06" "#c4a000" "#204a87" "#5c3566" "#729fcf" "#eeeeec"])
- '(custom-enabled-themes (quote (wheatgrass)))
+ '(custom-enabled-themes (quote (wombat)))
+ '(custom-safe-themes
+   (quote
+    ("aaffceb9b0f539b6ad6becb8e96a04f2140c8faa1de8039a343a4f1e009174fb" default)))
  '(indent-tabs-mode nil)
  '(inhibit-startup-screen nil)
  '(package-selected-packages
    (quote
-    (sr-speedbar company-go company go-mode python sml-mode)))
+    (dracula-theme sr-speedbar company-go company go-mode python sml-mode)))
  '(speedbar-show-unknown-files t)
  '(tab-stop-list (number-sequence 4 200 4))
  '(tab-width 4))
@@ -54,3 +59,13 @@
 
 ;; show hidden files in speedbar
 (setq speedbar-directory-unshown-regexp "^\\(CVS\\|RCS\\|SCCS\\|\\.\\.*$\\)\\'")
+
+;; load the dracula theme
+(load-theme 'dracula t)
+
+;; bind C-; to comment-region
+(global-set-key (kbd "C-; C-;") 'comment-region)
+
+;; bind C-x <up> to window left and C-x <down> to window right
+(global-set-key (kbd "C-x <up>") 'windmove-left)
+(global-set-key (kbd "C-x <down>") 'windmove-right)
