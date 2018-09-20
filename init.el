@@ -21,7 +21,7 @@
  '(inhibit-startup-screen nil)
  '(package-selected-packages
    (quote
-    (dracula-theme sr-speedbar company-go company go-mode python sml-mode)))
+    (auto-complete dracula-theme sr-speedbar go-mode python sml-mode)))
  '(speedbar-show-unknown-files t)
  '(tab-stop-list (number-sequence 4 200 4))
  '(tab-width 4))
@@ -49,7 +49,7 @@
 
 (infer-indentation-style)
 
-(add-hook 'after-init-hook 'global-company-mode) ; use `company-mode` in all buffers
+(add-hook 'after-init-hook 'global-auto-complete-mode) ; use auto-complete in all buffers
 
 (when (version<= "26.0.50" emacs-version ) ; toggle line numbers
   (global-display-line-numbers-mode))
