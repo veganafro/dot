@@ -21,7 +21,7 @@
  '(inhibit-startup-screen nil)
  '(package-selected-packages
    (quote
-    (auto-complete dracula-theme sr-speedbar go-mode python sml-mode)))
+    (ac-php php-mode yasnippet auto-complete dracula-theme sr-speedbar go-mode)))
  '(speedbar-show-unknown-files t)
  '(tab-stop-list (number-sequence 4 200 4))
  '(tab-width 4))
@@ -38,6 +38,12 @@
 
 (setq make-backup-files nil) ; stop creating backup~ files
 (setq auto-save-default nil) ; stop creating #autosave# files
+
+;; start autocomplete
+(ac-config-default)
+
+;; enable using the mouse
+(xterm-mouse-mode 1)
 
 (defun infer-indentation-style ()
   ;; if our source file uses tabs, we use tabs, if spaces spaces, and if        
