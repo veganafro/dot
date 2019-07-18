@@ -17,13 +17,18 @@
  '(custom-safe-themes
    (quote
     ("aaffceb9b0f539b6ad6becb8e96a04f2140c8faa1de8039a343a4f1e009174fb" default)))
+ '(git-gutter:added-sign "++")
+ '(git-gutter:deleted-sign "--")
+ '(git-gutter:modified-sign "  ")
+ '(git-gutter:window-width 2)
+ '(global-display-line-numbers-mode t)
  '(indent-tabs-mode nil)
  '(inhibit-startup-screen nil)
  '(package-selected-packages
    (quote
-    (ac-php php-mode yasnippet auto-complete dracula-theme sr-speedbar go-mode)))
+    (flycheck git-gutter ac-php php-mode yasnippet auto-complete dracula-theme sr-speedbar go-mode)))
+ '(setq display-line-numbers t)
  '(speedbar-show-unknown-files t)
- '(tab-stop-list (number-sequence 4 200 4))
  '(tab-width 4))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -36,42 +41,86 @@
                          ("marmalade" . "https://marmalade-repo.org/packages/")
                          ("melpa" . "https://melpa.org/packages/")))
 
+
 (setq make-backup-files nil) ; stop creating backup~ files
 (setq auto-save-default nil) ; stop creating #autosave# files
 
-;; start autocomplete
-(ac-config-default)
 
 ;; enable using the mouse
 (xterm-mouse-mode 1)
+;; enable mouse scrolling
+(global-set-key [mouse-4] 'scroll-down-line)
+(global-set-key [mouse-5] 'scroll-up-line)
+
+
+;; deactivate the delay before showing matching parenthesis
+(setq show-paren-delay 0)
+;; show matching parenthesis
+(show-paren-mode 1)
+;; show the line matching the parenthesis in the mini-buffer
+(defvar match-paren--idle-timer nil)
+(defvar match-paren--delay 0.25)
+(setq match-paren--idle-timer
+    (run-with-idle-timer match-paren--delay t #'blink-matching-open))
+;; auto-insert matching parenthesis
+(electric-pair-mode 1)
+
 
 (defun infer-indentation-style ()
-  ;; if our source file uses tabs, we use tabs, if spaces spaces, and if        
+  ;; if our source file uses tabs, we use tabs, if spaces spaces, and if
   ;; neither, we use the current indent-tabs-mode
   (let ((space-count (how-many "^  " (point-min) (point-max)))
         (tab-count (how-many "^\t" (point-min) (point-max))))
     (if (> space-count tab-count) (setq indent-tabs-mode nil))
     (if (> tab-count space-count) (setq indent-tabs-mode t))))
-
 (infer-indentation-style)
 
-(add-hook 'after-init-hook 'global-auto-complete-mode) ; use auto-complete in all buffers
 
-(when (version<= "26.0.50" emacs-version ) ; toggle line numbers
-  (global-display-line-numbers-mode))
+;; start autocomplete
+(ac-config-default)
+;; use auto-complete in all buffers
+(add-hook 'after-init-hook 'global-auto-complete-mode)
+
 
 ;; start sr-speedbar
 (sr-speedbar-open)
-
 ;; show hidden files in speedbar
 (setq speedbar-directory-unshown-regexp "^\\(CVS\\|RCS\\|SCCS\\|\\.\\.*$\\)\\'")
+
 
 ;; load the dracula theme
 (load-theme 'dracula t)
 
-;; bind C-; to comment-region
-(global-set-key (kbd "C-; C-;") 'comment-region)
 
-;; bind C-x <up> to window left and C-x <down> to window right
-(global-set-key (kbd "C-x <up>") 'windmove-left)
-(global-set-key (kbd "C-x <down>") 'windmove-right)
+;; use git gutter mode
+(require 'git-gutter)
+;; If you enable global minor mode
+(global-git-gutter-mode +1)
+(global-set-key (kbd "C-x C-g") 'git-gutter)
+(global-set-key (kbd "C-x v =") 'git-gutter:popup-hunk)
+;; Jump to next/previous hunk
+(global-set-key (kbd "C-x p") 'git-gutter:previous-hunk)
+(global-set-key (kbd "C-x n") 'git-gutter:next-hunk)
+;; Stage current hunk
+(global-set-key (kbd "C-x v s") 'git-gutter:stage-hunk)
+;; Revert current hunk
+(global-set-key (kbd "C-x v r") 'git-gutter:revert-hunk)
+;; Mark current hunk
+(global-set-key (kbd "C-x v SPC") #'git-gutter:mark-hunk)
+;; background color
+(set-face-background 'git-gutter:modified "purple")
+(set-face-foreground 'git-gutter:added "green")
+(set-face-foreground 'git-gutter:deleted "red")
+
+
+;; automatically use revert mode
+(global-auto-revert-mode 1)
+
+
+;; enable php docs
+(add-to-list 'load-path "~/.emacs.d/emacs-php-doc-block")
+(require 'php-doc-block)
+
+
+;; turn on flycheck mode for syntax highlighting
+(add-hook 'after-init-hook #'global-flycheck-mode)
