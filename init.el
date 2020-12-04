@@ -26,7 +26,7 @@
  '(inhibit-startup-screen nil)
  '(package-selected-packages
    (quote
-    (flycheck git-gutter ac-php php-mode yasnippet auto-complete dracula-theme sr-speedbar go-mode)))
+    (flycheck git-gutter yasnippet auto-complete dracula-theme sr-speedbar go-mode)))
  '(setq display-line-numbers t)
  '(speedbar-show-unknown-files t)
  '(tab-width 4))
@@ -115,12 +115,6 @@
 
 ;; automatically use revert mode
 (global-auto-revert-mode 1)
-
-
-;; enable php docs
-(add-to-list 'load-path "~/.emacs.d/emacs-php-doc-block")
-(require 'php-doc-block)
-
 
 ;; turn on flycheck mode for syntax highlighting
 (add-hook 'after-init-hook #'global-flycheck-mode)
