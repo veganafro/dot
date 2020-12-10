@@ -4,13 +4,8 @@ export EDITOR='emacs -nw'
 # configure android dev tools
 export JAVA_HOME="$(/usr/libexec/java_home -v1.8)"
 export ANDROID_HOME=~/android-sdk
-export ANDROID_NDK=~/android-ndk
-export ANDROID_NDK_HOME=~/android-ndk
-alias adb="$ANDROID_HOME/platform-tools/adb"
-alias aapt="$ANDROID_HOME/build-tools/30.0.1/aapt"
-alias aapt2="$ANDROID_HOME/build-tools/30.0.1/aapt2"
-alias apkanalyzer="$ANDROID_HOME/tools/bin/apkanalyzer"
-alias lint="$ANDROID_HOME/tools/bin/lint"
+export ANDROID_NDK=$ANDROID_HOME/ndk/21.3.6528147
+export ANDROID_NDK_HOME=$ANDROID_HOME/ndk/21.3.6528147
 
 # set up golang
 export GOPATH=$(go env GOPATH)
