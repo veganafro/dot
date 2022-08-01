@@ -3,6 +3,7 @@
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
 (package-initialize)
+(package-refresh-contents)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -11,12 +12,9 @@
  ;; If there is more than one, they won't work right.
  '(ansi-color-faces-vector
    [default default default italic underline success warning error])
- '(ansi-color-names-vector
-   ["#2e3436" "#a40000" "#4e9a06" "#c4a000" "#204a87" "#5c3566" "#729fcf" "#eeeeec"])
- '(custom-enabled-themes (quote (wombat)))
+ '(custom-enabled-themes '(wombat))
  '(custom-safe-themes
-   (quote
-    ("aaffceb9b0f539b6ad6becb8e96a04f2140c8faa1de8039a343a4f1e009174fb" default)))
+   '("aaffceb9b0f539b6ad6becb8e96a04f2140c8faa1de8039a343a4f1e009174fb" default))
  '(git-gutter:added-sign "++")
  '(git-gutter:deleted-sign "--")
  '(git-gutter:modified-sign "  ")
@@ -25,8 +23,7 @@
  '(indent-tabs-mode nil)
  '(inhibit-startup-screen nil)
  '(package-selected-packages
-   (quote
-    (flycheck git-gutter yasnippet auto-complete dracula-theme sr-speedbar go-mode)))
+   '(exec-path-from-shell flycheck git-gutter yasnippet auto-complete sr-speedbar go-mode))
  '(setq display-line-numbers t)
  '(speedbar-show-unknown-files t)
  '(tab-width 4))
@@ -88,10 +85,6 @@
 (setq speedbar-directory-unshown-regexp "^\\(CVS\\|RCS\\|SCCS\\|\\.\\.*$\\)\\'")
 
 
-;; load the dracula theme
-(load-theme 'dracula t)
-
-
 ;; use git gutter mode
 (require 'git-gutter)
 ;; If you enable global minor mode
@@ -117,4 +110,6 @@
 (global-auto-revert-mode 1)
 
 ;; turn on flycheck mode for syntax highlighting
-(add-hook 'after-init-hook #'global-flycheck-mode)
+(global-flycheck-mode)
+(exec-path-from-shell-initialize)
+
